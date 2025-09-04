@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config'; // Importa ConfigModule y ConfigService
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import ormconfig from '../ormconfig'; // Importa el archivo de configuración
+import { UsersModule } from './users/users.module';
+import { AppDataSource } from '../ormconfig'; // Importa el archivo de configuración, cambiado de la opción por defecto, a la opción con nombre
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import ormconfig from '../ormconfig'; // Importa el archivo de configuración
         synchronize: false,
       }),
       inject: [ConfigService],
-    }),
+    }), UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
